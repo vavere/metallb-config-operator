@@ -13,6 +13,17 @@ async function cmExists(ns, name) {
   }
 }
 
+async function cmRead(ns, name) {
+  try {
+    console.log(`INFO: read definition ${ns}/${name}`);
+    const res = await k8sApi.readNamespacedConfigMap(name, ns);
+    return res.body;
+  } catch (e) {
+    console.error('ERROR:', e.response.statusCode, e.response.statusMessage, e.response.request.response.body.message);
+  }
+}
+
+
 async function cmDelete(ns, name) {
   console.log(`INFO: delete configmap ${ns}/${name}`);
   try {
@@ -80,10 +91,15 @@ async function createConfig() {
 }
 
 async function updateConfig(ns, name) {
-  console.log(`INFO: update config`);
+  console.log(`INFO: monitor changes for ${ns}/${name}`);
   const config = await createConfig();
   if (!config) return console.error('ERROR: empty config');
-  if (await cmExists(ns, name)) await cmDelete(ns, name);
+  if (await cmExists(ns, name)) {
+    const cm = await cmRead(ns, name);
+    if (cm.data.config && cm.data.config == config)
+      return console.log(`INFO: no changes are found`);
+    await cmDelete(ns, name);
+  }
   return await cmCreate(ns, name, config);
 }
 
