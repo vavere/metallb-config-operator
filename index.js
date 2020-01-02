@@ -127,7 +127,7 @@ async function main(ns, name) {
 const kc = new k8s.KubeConfig();
 process.env.NODE_ENV === 'production' ? kc.loadFromCluster() : kc.loadFromDefault();
 const k8sApi = kc.makeApiClient(k8s.CoreV1Api);
-const ns = process.env.POD_NAMESPACE ? process.env.POD_NAMESPACE : 'default';
+const ns = process.env.CONFIG_NS ? process.env.CONFIG_NS : 'default';
 const name = process.env.CONFIG_NAME ? process.env.CONFIG_NAME : 'config';
 main(ns, name);
 
