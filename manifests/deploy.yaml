@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: metallb-config-operator
+  name: config-operator
 spec:
   replicas: 1
   selector:
     matchLabels:
-      run: metallb-config-operator
+      run: config-operator
   template:
     metadata:
       labels:
-        run: metallb-config-operator
+        run: config-operator
     spec:
       serviceAccountName: config-operator
       containers:
       - image: vavere/metallb-config-operator:0.0.3
-        name: metallb-config-operator
+        name: config-operator
         resources:
           requests:
             cpu: "10m"
