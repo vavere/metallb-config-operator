@@ -124,10 +124,13 @@ async function main(ns, name) {
 
 }
 
-const kc = new k8s.KubeConfig();
-process.env.NODE_ENV === 'production' ? kc.loadFromCluster() : kc.loadFromDefault();
-const k8sApi = kc.makeApiClient(k8s.CoreV1Api);
+const prod = process.env.NODE_ENV == 'production';
 const ns = process.env.CONFIG_NS ? process.env.CONFIG_NS : 'default';
 const name = process.env.CONFIG_NAME ? process.env.CONFIG_NAME : 'config';
+console.log(`INFO: production: ${prod}, ns: ${ns}, name: ${name}`);
+
+const kc = new k8s.KubeConfig();
+prod ? kc.loadFromCluster() : kc.loadFromDefault();
+const k8sApi = kc.makeApiClient(k8s.CoreV1Api);
 main(ns, name);
 
