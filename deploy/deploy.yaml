@@ -23,3 +23,10 @@ spec:
           limits:
             cpu: "100m"
             memory: "96Mi"
+        env:
+          - name: CONFIG_NAME
+            value: config
+          - name: CONFIG_NS
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
