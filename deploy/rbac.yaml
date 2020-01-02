@@ -1,0 +1,59 @@
+---
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: metallb-config-operator
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: metallb-config-operator
+rules:
+- apiGroups: [""]
+  resources: ["nodes"]
+  verbs: ["get", "list", "watch"]
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: metallb-config-operator
+rules:
+- apiGroups: [""]
+  resources: ["configmaps"]
+#  resourceNames: ["config"]  # must be same as env CONFIG_NAME
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: metallb-config-operator
+subjects:
+- kind: ServiceAccount
+  name: metallb-config-operator
+  namespace: default # must be same as env CONFIG_NS
+roleRef:
+  kind: ClusterRole
+  name: metallb-config-operator
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: metallb-config-operator
+subjects:
+- kind: ServiceAccount
+  name: metallb-config-operator
+  namespace: default # must be same as env CONFIG_NS
+roleRef:
+  kind: Role
+  name: metallb-config-operator
+  apiGroup: rbac.authorization.k8s.io
