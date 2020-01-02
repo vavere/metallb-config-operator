@@ -91,7 +91,7 @@ async function createConfig() {
 }
 
 async function updateConfig(ns, name) {
-  console.log(`INFO: monitor changes for ${ns}/${name}`);
+  console.log(`INFO: calculate changes`);
   const config = await createConfig();
   if (!config) return console.error('ERROR: empty config');
   if (await cmExists(ns, name)) {
