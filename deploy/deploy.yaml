@@ -14,7 +14,7 @@ spec:
     spec:
       serviceAccountName: metallb-config-operator
       containers:
-      - image: vavere/metallb-config:0.2
+      - image: vavere/metallb-config-operator:0.0.2
         name: metallb-config-operator
         resources:
           requests:
