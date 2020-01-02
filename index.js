@@ -70,7 +70,7 @@ async function createConfig() {
         addresses: []
       },
       {
-        name: 'default',
+        name: 'other',
         protocol: 'layer2',
         'auto-assign': false,
         addresses: []
