@@ -3,7 +3,7 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: metallb-config-operator
+  name: config-operator
 
 ---
 
@@ -36,7 +36,7 @@ metadata:
   name: metallb-config-operator
 subjects:
 - kind: ServiceAccount
-  name: metallb-config-operator
+  name: config-operator
   namespace: default # must be same as env CONFIG_NS
 roleRef:
   kind: ClusterRole
@@ -51,7 +51,7 @@ metadata:
   name: metallb-config-operator
 subjects:
 - kind: ServiceAccount
-  name: metallb-config-operator
+  name: config-operator
   namespace: default # must be same as env CONFIG_NS
 roleRef:
   kind: Role
